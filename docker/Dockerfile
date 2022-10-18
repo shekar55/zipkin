@@ -77,7 +77,7 @@ USER ${USER}
 FROM base-server as zipkin-slim
 LABEL org.opencontainers.image.description="Zipkin slim distribution on OpenJDK and Alpine Linux"
 
-COPY --from=install --chown=${USER} /install/zipkin-slim/ /zipkin/
+# COPY --from=install --chown=${USER} /install/zipkin-slim/ /zipkin/
 
 EXPOSE 9411
 
