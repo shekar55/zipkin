@@ -13,7 +13,7 @@
 # the License.
 #
 
-sudo set -ue
+set -ue
 
 # Like `maven_unjar`, except when the version ends in SNAPSHOT and the artifact isn't in the $PWD,
 # it is built on-demand using `mvn package`. MAVEN_PROJECT_BASEDIR is used when the version arg or
@@ -56,8 +56,8 @@ case ${version} in
     ;;
 esac
 
-sudo set -ue
+set -ue
 
-sudo echo "*** Building snapshot from source..."
-sudo $(dirname "$0")/maven_build -pl :${artifact_id} --am
-sudo $(dirname "$0")/maven_unjar $args
+echo "*** Building snapshot from source..."
+$(dirname "$0")/maven_build -pl :${artifact_id} --am
+$(dirname "$0")/maven_unjar $args
