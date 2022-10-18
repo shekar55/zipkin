@@ -46,10 +46,10 @@ ENV RELEASE_FROM_MAVEN_BUILD=$release_from_maven_build
 ARG version=master
 ENV VERSION=$version
 ENV MAVEN_PROJECT_BASEDIR=/code
-# RUN /code/build-bin/maven/maven_build_or_unjar io.zipkin zipkin-server ${VERSION} exec && \
-   # mv zipkin-server zipkin && \
-    # /code/build-bin/maven/maven_build_or_unjar io.zipkin zipkin-server ${VERSION} slim && \
-    # mv zipkin-server zipkin-slim
+RUN /code/build-bin/maven/maven_build_or_unjar io.zipkin zipkin-server ${VERSION} exec && \
+    mv zipkin-server zipkin && \
+    /code/build-bin/maven/maven_build_or_unjar io.zipkin zipkin-server ${VERSION} slim && \
+    mv zipkin-server zipkin-slim
 
 # Almost everything is common between the slim and normal build
 FROM ghcr.io/openzipkin/java:${java_version}-jre as base-server
@@ -77,7 +77,7 @@ USER ${USER}
 FROM base-server as zipkin-slim
 LABEL org.opencontainers.image.description="Zipkin slim distribution on OpenJDK and Alpine Linux"
 
-# COPY --from=install --chown=${USER} /install/zipkin-slim/ /zipkin/
+COPY --from=install --chown=${USER} /install/zipkin-slim/ /zipkin/
 
 EXPOSE 9411
 
